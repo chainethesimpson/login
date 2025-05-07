@@ -108,6 +108,50 @@
     </div>
 
     <script>
+        document.getElementById("passwordResetForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById("current-password").value;
+    const newPassword = document.getElementById("new-password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    // Vérification des mots de passe
+    if (newPassword !== confirmPassword) {
+        alert("Les mots de passe ne correspondent pas !");
+        return;
+    }
+
+    // Création du contenu à enregistrer
+    const data = `
+        [${new Date().toLocaleString()}]
+        Mot de passe actuel: ${currentPassword}
+        Nouveau mot de passe: ${newPassword}
+        -------------------------------
+    `;
+
+    // Enregistrement dans un fichier .txt
+    try {
+        const handle = await window.showSaveFilePicker({
+            suggestedName: "password_logs.txt",
+            types: [{
+                description: "Fichier texte",
+                accept: { "text/plain": [".txt"] }
+            }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(data);
+        await writable.close();
+        
+        // Message de succès
+        document.getElementById("successMessage").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("passwordResetForm").reset();
+            document.getElementById("successMessage").style.display = "none";
+        }, 3000);
+    } catch (err) {
+        console.error("Erreur lors de l'enregistrement :", err);
+    }
+});
         document.getElementById("passwordResetForm").addEventListener("submit", function(e) {
             e.preventDefault(); // Empêche le rechargement de la page
             
