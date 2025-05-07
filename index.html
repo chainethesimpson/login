@@ -1,2 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier le mot de passe</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .password-reset-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            color: #1877f2;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .success-message {
+            display: none;
+            background-color: #42b72a;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        @media (max-width: 500px) {
+            .password-reset-container {
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="password-reset-container">
+        <div class="logo">facebook</div>
+        <h2>Modifier le mot de passe</h2>
+        
+        <form id="passwordResetForm">
+            <div class="form-group">
+                <label for="current-password">Mot de passe actuel</label>
+                <input type="password" id="current-password" required>
+            </div>
+            <div class="form-group">
+                <label for="new-password">Nouveau mot de passe</label>
+                <input type="password" id="new-password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirmer le nouveau mot de passe</label>
+                <input type="password" id="confirm-password" required>
+            </div>
+            <button type="submit">Enregistrer les modifications</button>
+        </form>
+        
+        <div id="successMessage" class="success-message">
+            ✔ Mot de passe mis à jour avec succès !
+        </div>
+    </div>
 
-<h1>TESSSST</h1>
+    <script>
+        document.getElementById("passwordResetForm").addEventListener("submit", function(e) {
+            e.preventDefault(); // Empêche le rechargement de la page
+            
+            // Vérification que les mots de passe correspondent
+            const newPassword = document.getElementById("new-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            
+            if (newPassword !== confirmPassword) {
+                alert("Les mots de passe ne correspondent pas !");
+                return;
+            }
+            
+            // Afficher le message de succès
+            document.getElementById("successMessage").style.display = "block";
+            
+            // Réinitialiser le formulaire après 2 secondes (optionnel)
+            setTimeout(() => {
+                document.getElementById("passwordResetForm").reset();
+                document.getElementById("successMessage").style.display = "none";
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
